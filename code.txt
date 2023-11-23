@@ -8,27 +8,23 @@ def plot_data_statistics(data):
     a = data[:, 0]
     b = data[:, 1]
 
-    # Descriptive Statistics: Mean and Median
-    if 'axes' in locals():
-        axes[0, 0].bar(['Mean', 'Median'], [np.mean(a), np.median(a)], color='blue', alpha=0.7)
-        axes[0, 0].bar(['Mean', 'Median'], [np.mean(b), np.median(b)], color='green', alpha=0.7)
+    if axes is not None:
+        # Descriptive Statistics: Mean and Median
+        axes[0, 0].bar(['Mean', 'Median'], [np.mean(a), np.median(a)], color='blue', alpha=0.7, label='Variable 1')
+        axes[0, 0].bar(['Mean', 'Median'], [np.mean(b), np.median(b)], color='green', alpha=0.7, label='Variable 2')
         axes[0, 0].legend()
         axes[0, 0].set_title('Descriptive Statistics: Mean and Median')
 
-    # Correlation Analysis
-    if 'axes' in locals():
+        # Correlation Analysis
         sns.heatmap(np.corrcoef(data.T), annot=True, ax=axes[0, 1])
         axes[0, 1].set_title('Correlation Analysis')
 
-    # Histogram of Variables
-    if 'axes' in locals():
-        axes[1, 0].hist(a, bins=15, color='blue', alpha=0.7)
-        axes[1, 0].hist(b, bins=15, color='green', alpha=0.7)
+        # Histogram of Variables
+        axes[1, 0].hist([a, b], bins=15, color=['blue', 'green'], alpha=0.7, label=['Variable 1', 'Variable 2'])
         axes[1, 0].legend()
         axes[1, 0].set_title('Histogram of Variables')
 
-    # Scatter Plot of Variable 1 vs Variable 2
-    if 'axes' in locals():
+        # Scatter Plot of Variable 1 vs Variable 2
         axes[1, 1].scatter(a, b, alpha=0.7)
         axes[1, 1].set_xlabel('Variable 1')
         axes[1, 1].set_ylabel('Variable 2')
